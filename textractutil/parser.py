@@ -69,7 +69,7 @@ def get_text_blocks_by_row(textract_response):
 
 	if cur_row: text_block_list_by_row.append(cur_row)
 
-	return text_block_list_by_row
+	return [list(filter(lambda x: x!= "", row)) for row in text_block_list_by_row]
 
 @input_validator(dict)
 def get_text_by_row(textract_response):
