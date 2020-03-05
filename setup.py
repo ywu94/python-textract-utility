@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
 	name="textractutil",
-	version="0.0.1",
+	version="0.0.2",
 	author="Yifan Wu",
 	author_email="yw693@cornell.edu",
 	description="Python utilities for parsing AWS Textract results.",

@@ -5,7 +5,31 @@ from __future__ import print_function
 import logging
 logger = logging.getLogger(__name__)
 
+from collections import defaultdict
+
 from .input_validator import input_validator
+
+@input_validator(dict)
+def page_split(textract_response):
+	"""
+	Split Textract response JSON by page
+	|
+	| Argument: dict (JSON-parsed Textract Response)
+	|
+	| Output: dict
+	|    key: int (page number)
+	|    value: dict (JSON-parsed Textract Response for corresponding page)
+	"""
+	data_buffer = defaultdict(list)
+
+	if "Blocks" not in textract_response:
+		logger.error("textract_util.parser.page_split: invalid input") 
+		return data_buffer
+
+	for block in textract_response["Blocks"]:
+		data_buffer[block.get('Page', 'No Page')] += [block]
+
+	return {k:{"Blocks":v} for k, v in data_buffer.items()}
 
 @input_validator(dict)
 def get_text_blocks(textract_response):
